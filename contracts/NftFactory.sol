@@ -25,9 +25,7 @@ contract NftFactory is Ownable {
 
     event Deployed(address indexed deployer, address indexed deployedNft, uint256 indexed index);
 
-    constructor() {
-        transferOwnership(msg.sender);
-    }
+    constructor() {}
 
     function setPrefixBaseURI(string memory _prefixBaseURI) external onlyOwner {
         prefixBaseURI = _prefixBaseURI;
