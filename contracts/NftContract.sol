@@ -5,13 +5,15 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract NftContract is ERC721("NFT", "NFT"), Ownable {
+contract NftContract is ERC721, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIdCounter;
 
     string public baseURI;
 
-    constructor(address creator, string memory _prefixBaseURI) {
+    constructor(string memory _name, string memory _symbol, address creator, string memory _prefixBaseURI) 
+        ERC721(_name, _symbol)
+    {
         transferOwnership(creator);
         baseURI = string(abi.encodePacked(_prefixBaseURI, address(this), "/"));
     }
