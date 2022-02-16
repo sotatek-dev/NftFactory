@@ -29,6 +29,10 @@ contract NftFactory is Ownable {
         transferOwnership(msg.sender);
     }
 
+    function setPrefixBaseURI(string memory _prefixBaseURI) external onlyOwner {
+        prefixBaseURI = _prefixBaseURI;
+    }
+
     //TODO Add blacklist
     /**
      * @notice Deploy new NFT use this factory
@@ -73,5 +77,14 @@ contract NftFactory is Ownable {
             symbols[i] = infos.symbol;
         }
         return (deployedNfts, names, symbols);
+    }
+
+    /**
+     * @notice Get Info of an deployed Nft
+     * @param deployed Address of deployed nft
+     * @return info Info of deployed Nft
+     */
+    function getInfoOfDeployedNft(address deployed) external view returns (NftInfo memory info){
+        return _nftInfos[deployed];
     }
 }
