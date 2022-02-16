@@ -16,6 +16,14 @@ contract NftFactory is Ownable {
         transferOwnership(msg.sender);
     }
 
+    //TODO Add blacklist
+    /**
+     * @notice Deploy new NFT use this factory
+     * @dev All user can create new nft
+     * @param _name Name of new NFT
+     * @param _symbol Symbol of new NFT
+     * @return deployed Address of new deployed nft
+     */
     function deploy(string memory _name, string memory _symbol) external returns (address deployed) {
         require(bytes(_name).length > 0, "Deploy::Name must not empty");
         require(bytes(_symbol).length > 0, "Deploy::Symbol must not empty");
