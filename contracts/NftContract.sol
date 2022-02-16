@@ -9,8 +9,11 @@ contract NftContract is ERC721("NFT", "NFT"), Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIdCounter;
 
-    constructor(address creator) {
+    string public baseURI;
+
+    constructor(address creator, string memory _prefixBaseURI) {
         transferOwnership(creator);
+        baseURI = string(abi.encodePacked(_prefixBaseURI, address(this), "/"));
     }
 
     function mint(address to) public onlyOwner returns (uint256) {
@@ -18,5 +21,9 @@ contract NftContract is ERC721("NFT", "NFT"), Ownable {
         _safeMint(to, _tokenIdCounter.current());
 
         return _tokenIdCounter.current();
+    }
+
+    function _baseURI() internal view override returns (string memory) {
+        return baseURI;
     }
 }
