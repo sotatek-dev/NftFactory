@@ -21,5 +21,14 @@ context('#NftFactory', async() => {
         await expect(nftContract.address).to.be.properAddress;
         const ownerAddress = await nftContract.owner();
         await expect(ownerAddress).to.be.equal(admin.address);
-    })
+    });
+
+    it('Set base url', async() => {
+        let baseURI = await nftContract.prefixBaseURI();
+        expect(baseURI).to.be.eq("");
+        const prefixBaseURI = "https://buni.nft";
+        await nftContract.connect(admin).setPrefixBaseURI(prefixBaseURI);
+        baseURI = await nftContract.prefixBaseURI();
+        expect(baseURI).to.be.equal(prefixBaseURI);
+    })    
 })
