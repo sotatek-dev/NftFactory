@@ -87,4 +87,24 @@ contract NftFactory is Ownable {
     function getInfoOfDeployedNft(address deployed) external view returns (NftInfo memory info){
         return _nftInfos[deployed];
     }
+
+    /**
+     * @notice Get number of deployed Nfts
+     * @return Number of deployed Nfts
+     */
+    function getNumberOfDeployedNfts() external view returns (uint256) {
+        return _allNfts.length;
+    }
+
+    /**
+     * @notice getAddress of userAddress by index
+     * @param userAddress Address of user
+     * @param index Index of contract
+     * @return Address of deployed nft
+     */
+    function getNftOfUserByIndex(address userAddress, uint256 index) external view returns (address) {
+        address[] memory deployedNfts = _deployedNfts[userAddress];
+        require(index < deployedNfts.length, "getNft::Index out of range");
+        return deployedNfts[index];
+    }
 }
