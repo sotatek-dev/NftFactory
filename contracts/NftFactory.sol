@@ -55,4 +55,23 @@ contract NftFactory is Ownable {
     function getDeployedNfts(address userAddress) public view returns (address[] memory deployedNfts) {
         return _deployedNfts[userAddress];
     }
+
+    /**
+     * @notice Get address, name and symbol of deployed NFTs of an user
+     * @param userAddress address of user
+     * @return Addresses of NFTs deployed
+     * @return Names of NFTs deployed
+     * @return Symbols of NFTs deployed
+     */
+    function getAddressAndNameAndSymbolOfNfts(address userAddress) public view returns (address[] memory, string[] memory, string[] memory) {
+        address[] memory deployedNfts = getDeployedNfts(userAddress);
+        string[] memory names = new string[](deployedNfts.length);
+        string[] memory symbols = new string[](deployedNfts.length);
+        for (uint256 i = 0; i < deployedNfts.length; i++) {
+            NftInfo memory infos = _nftInfos[deployedNfts[i]];
+            names[i] = infos.name;
+            symbols[i] = infos.symbol;
+        }
+        return (deployedNfts, names, symbols);
+    }
 }
