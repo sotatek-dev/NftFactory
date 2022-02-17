@@ -54,6 +54,17 @@ context('#NftFactory', async() => {
             expect(info.name).to.be.eq(contractName);
             expect(info.symbol).to.be.eq(contractSymbol);
             expect(info.deployedUser).to.be.equal(account1.address);
-        })
+        });
+
+        it('Get address, name and symbol of deployed nft', async() => {
+            const res = await nftFactory.getAddressAndNameAndSymbolOfNfts(account1.address);
+            const deployedAddress = (await nftFactory.getNftOfUserByIndex(account1.address, 0));
+            const addreses = res[0];
+            const names = res[1];
+            const symbols = res[2];
+            expect(addreses[0]).to.be.equal(deployedAddress);
+            expect(names[0]).to.be.equal(contractName);
+            expect(symbols[0]).to.be.equal(contractSymbol);
+        });
     })
 })
