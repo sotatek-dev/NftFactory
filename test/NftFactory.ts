@@ -41,11 +41,19 @@ context('#NftFactory', async() => {
         const contractName = "TestNFT";
         const contractSymbol = "NFT";
         beforeEach(async() => {
-            const tx = await nftFactory.connect(account1).deploy(contractName, contractSymbol);
-            console.log(tx);
+            await nftFactory.connect(account1).deploy(contractName, contractSymbol);
         });
-        it('Test stuff', async() => {
-            expect(1).to.be.eq(1);
+        it('There is one deployed NFT', async() => {
+            const numberOfDeployed = await nftFactory.getNumberOfDeployedNfts();
+            expect(numberOfDeployed).to.be.equal(1);
         });
+
+        it('Set correct info of deployed nft', async() => {
+            const deployed = await nftFactory.getNftOfUserByIndex(account1.address, 0);
+            const info = await nftFactory.getInfoOfDeployedNft(deployed);
+            expect(info.name).to.be.eq(contractName);
+            expect(info.symbol).to.be.eq(contractSymbol);
+            expect(info.deployedUser).to.be.equal(account1.address);
+        })
     })
 })
