@@ -42,4 +42,9 @@ context('#NftContract', async() => {
         const expectedURI = (`${prefixBaseURI}${nftContract.address.slice(2)}/`).toLowerCase();
         expect(baseURI).to.be.equal(expectedURI);
     });
+
+    it('Get correct owner', async() => {
+        const owner = await nftContract.owner();
+        await expect(owner).to.be.equal(account1.address);
+    })
 })
