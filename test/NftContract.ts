@@ -46,5 +46,13 @@ context('#NftContract', async() => {
     it('Get correct owner', async() => {
         const owner = await nftContract.owner();
         await expect(owner).to.be.equal(account1.address);
-    })
+    });
+
+    it('Mint token by admin', async() => {
+        await nftContract.connect(account1).mint(account1.address);
+        const currentAvailableToken = await nftContract.currentToken();
+        expect(currentAvailableToken).to.be.equal(1);
+        const balance = await nftContract.balanceOf(account1.address);
+        expect(balance).to.be.equal(1);
+    });
 })
