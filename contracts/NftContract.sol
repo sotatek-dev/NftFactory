@@ -18,6 +18,12 @@ contract NftContract is ERC721, Ownable {
         baseURI = string(abi.encodePacked(_prefixBaseURI, address(this), "/"));
     }
 
+    /**
+     * @notice Mint new token
+     * @dev only owner can call
+     * @param to address of the receiver of NFT
+     * @return Current available token index
+     */
     function mint(address to) public onlyOwner returns (uint256) {
         _tokenIdCounter.increment();
         _safeMint(to, _tokenIdCounter.current());
@@ -27,5 +33,9 @@ contract NftContract is ERC721, Ownable {
 
     function _baseURI() internal view override returns (string memory) {
         return baseURI;
+    }
+
+    function currentToken() external view returns (uint256) {
+        return _tokenIdCounter.current();    
     }
 }
